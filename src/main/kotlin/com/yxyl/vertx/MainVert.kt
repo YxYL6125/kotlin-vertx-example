@@ -49,7 +49,7 @@ class MainVert : CoroutineVerticle() {
         val serverFuture = vertx.createHttpServer()
             .requestHandler(routes(postHandler))
             .listen(8080)
-        //挂起
+        //挂起 Start the server
         val server = serverFuture.await()
         println("HTTP server port: ${server.actualPort()}")
     }
@@ -69,20 +69,20 @@ class MainVert : CoroutineVerticle() {
         }
         router.get("/posts")
             .produces(contentTypeJson)
-            .handler { r -> launch { postHandlers.all(r) } }
+            .coroutineHandler { postHandlers.all(it) }
         router.post("/posts")
             .consumes(contentTypeJson)
             .produces(contentTypeJson)
             .handler(BodyHandler.create())
-            .handler { r -> launch { postHandlers.save(r) } }
+            .coroutineHandler { postHandlers.save(it) }
         router.get("/posts/:id")
             .produces(contentTypeJson)
-            .handler { r -> launch { postHandlers.getById(r) } }
+            .coroutineHandler { postHandlers.getById(it) }
         router.post("/posts/:id")
             .consumes(contentTypeJson)
             .produces(contentTypeJson)
             .handler(BodyHandler.create())
-            .handler { r -> launch { postHandlers.update(r) } }
+            .coroutineHandler { postHandlers.update(it) }
 
         router.route().failureHandler { r ->
             if (r.failure() is PostNotFoundException)
@@ -90,10 +90,8 @@ class MainVert : CoroutineVerticle() {
                     .end(json {
                         obj("message" to "${r.failure().message}", "code" to "not found")
                             .toString()
-                    }
-                    )
+                    })
         }
-
 
         return router
     }
