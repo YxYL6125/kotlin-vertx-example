@@ -39,6 +39,8 @@ dependencies {
     implementation 'io.vertx:vertx-web:4.3.1'
     implementation 'io.vertx:vertx-lang-kotlin-coroutines:4.3.1'
     implementation 'io.vertx:vertx-pg-client:4.3.1'
+    implementation 'io.vertx:vertx-mysql-client:4.3.1'
+
     implementation group: 'com.ongres.scram', name: 'client', version: '2.1'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: "${jacksonVersion}"
     implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: "${jacksonVersion}"
