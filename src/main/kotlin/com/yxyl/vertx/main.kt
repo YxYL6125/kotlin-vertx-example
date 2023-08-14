@@ -7,7 +7,7 @@ import io.vertx.kotlin.coroutines.dispatcher
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-fun main(args: Array<String>) {
+fun main() {
     val vertx = Vertx.vertx()
     GlobalScope.launch(vertx.dispatcher()) {
         val timerId = awaitEvent<Long> { handler ->

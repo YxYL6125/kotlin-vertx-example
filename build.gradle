@@ -54,3 +54,7 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "17"
 }
 
+
+application {
+    mainClassName = 'com.yxyl.vertx.MainKt'
+}
